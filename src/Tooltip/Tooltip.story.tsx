@@ -6,6 +6,7 @@ import { colors } from "../colors";
 import { PerformUserInteraction } from "../shared/PerformUserInteraction";
 import userEvent from "@testing-library/user-event";
 import { findByRole } from "@testing-library/dom";
+import { DebugTooltip } from "../shared/DebugTooltip";
 
 storiesOf("Tooltip", module)
   .add("live", () => {
@@ -40,32 +41,32 @@ storiesOf("Tooltip", module)
     "normal padding",
     () => {
       return (
-        <PerformUserInteraction
-          callback={async () => {
-            userEvent.click(await findByRole(document.body, "button"));
-          }}
-        >
-          <div
-            style={{
-              alignItems: "center",
-              border: `1px solid ${colors.silver.light}`,
-              borderRadius: ".25rem",
-              display: "flex",
-              height: 150,
-              justifyContent: "center",
-              width: 149,
+        <DebugTooltip>
+          <PerformUserInteraction
+            callback={async () => {
+              userEvent.click(await findByRole(document.body, "button"));
             }}
           >
-            <Tooltip content="hover">
-              <Button>hover</Button>
-            </Tooltip>
-          </div>
-        </PerformUserInteraction>
+            <div
+              style={{
+                alignItems: "center",
+                border: `1px solid ${colors.silver.light}`,
+                borderRadius: ".25rem",
+                display: "flex",
+                height: 150,
+                justifyContent: "center",
+                width: 149,
+              }}
+            >
+              <Tooltip content="hover">
+                <Button>hover</Button>
+              </Tooltip>
+            </div>
+          </PerformUserInteraction>
+        </DebugTooltip>
       );
     },
-    {
-      chromatic: { delay: 500 },
-    }
+    { chromatic: { delay: 500 } }
   )
   .add(
     "relaxed padding",
@@ -110,7 +111,5 @@ storiesOf("Tooltip", module)
         </PerformUserInteraction>
       );
     },
-    {
-      chromatic: { delay: 500 },
-    }
+    { chromatic: { delay: 500 } }
   );
